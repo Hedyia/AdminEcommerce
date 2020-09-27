@@ -1,6 +1,7 @@
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Models;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +28,9 @@ namespace Infrastructure.Extensions
  
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+            
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
  
             return services;
         }
