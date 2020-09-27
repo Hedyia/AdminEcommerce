@@ -1,3 +1,4 @@
+using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Models;
 using Microsoft.AspNetCore.Authentication;
