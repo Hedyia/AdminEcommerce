@@ -1,7 +1,7 @@
 namespace Core.Interfaces
 {
-    public class ICurrentUserService
+    public interface ICurrentUserService
     {
-        public string UserId { get; set; }
+        public string UserId { get; }
     }
 }

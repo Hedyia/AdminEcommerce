@@ -1,12 +1,15 @@
+using System.Text;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Models;
 using Infrastructure.Repositories;
 using Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Extensions
 {
@@ -27,8 +30,18 @@ namespace Infrastructure.Extensions
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
  
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super secret key"));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = key,
+                        ValidateAudience = false,
+                        ValidateIssuer = false
+                    };
+                });
             
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();

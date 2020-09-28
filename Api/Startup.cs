@@ -25,7 +25,7 @@ namespace Api
             services.AddInfrastructure(Configuration);
             services.AddApplication();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,8 +37,9 @@ namespace Api
             }
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
