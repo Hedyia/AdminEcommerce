@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
+using Infrastructure.Data;
 
 namespace Infrastructure.Repositories
 {

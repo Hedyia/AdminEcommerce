@@ -5,9 +5,9 @@ using Core.Common;
 using Core.Entities;
 using Core.Interfaces;
 using IdentityServer4.EntityFramework.Options;
+using Infrastructure.Data.EntitiesConfigurations;
 using Infrastructure.Models;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -45,6 +45,11 @@ namespace Infrastructure.Data
             }
  
             return base.SaveChangesAsync(cancellationToken);
+        }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.ApplyConfiguration(new CategoryConfiguration());
+            base.OnModelCreating(builder);
         }
     }
 }
